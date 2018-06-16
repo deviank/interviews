@@ -25,7 +25,7 @@ class ProductController {
         
         $curl = curl_init();
         
-        $requestData = array();
+        $requestData = [];
         $requestData['id'] = $id;
         curl_setopt($curl, CURLOPT_URL,  'http://192.168.0.241/eanlist?type=Web');
         curl_setopt($curl, CURLOPT_POST, 1);
@@ -34,16 +34,17 @@ class ProductController {
         $response = json_decode(curl_exec($curl));
         curl_close($curl);
         $result = [];
-                
-        for ($i = 0; $i < count($response); $i++) {
-            $prod = array();
+        
+        $prod = [];
+        $p_price = [];
+        
+        for ($i = 0; $i < count($response); $i++) {            
             $prod['ean'] = $response[$i]['barcode'];
             $prod['name'] = $response[$i]['itemName'];
-            $prod['prices'] = array();
+            $prod['prices'] = [];
             
                 for ($j = 0; $j < count($response[$i]['prices']); $j++) {
-                    if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {
-                        $p_price = array();
+                    if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {                        
                         $p_price['price'] = $response[$i]['prices'][$j]['sellingPrice'];
                         $p_price['currency'] = $response[$i]['prices'][$j]['currencyCode'];
                         $prod['prices'][] = $p_price;
@@ -68,7 +69,7 @@ class ProductController {
     public function getByName_GET(Application $app, $name){
         $curl = curl_init();
         
-        $requestData = array();
+        $requestData = [];
         $requestData['names'] = $name;
         curl_setopt($curl, CURLOPT_URL, 'http://192.168.0.241/eanlist?type=Web');
         curl_setopt($curl, CURLOPT_POST, 1);
@@ -78,15 +79,16 @@ class ProductController {
         curl_close($curl);       
         $result = [];
         
+        $prod = [];
+        $p_price = [];
+        
         for ($i = 0; $i < count($response); $i++) {
-            $prod = array();
             $prod['ean'] = $response[$i]['barcode'];
             $prod['name']= $response[$i]['itemName'];
             $prod['prices'] = array();
             
             for ($j = 0; $j < count($response[$i]['prices']); $j++) {
-                if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {
-                    $p_price = array();
+                if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {                    
                     $p_price['price'] = $response[$i]['prices'][$j]['sellingPrice'];
                     $p_price['currency'] = $response[$i]['prices'][$j]['currencyCode'];
                     $prod['prices'][] = $p_price;
