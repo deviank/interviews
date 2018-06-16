@@ -54,7 +54,7 @@ class ProductController {
             $result[] = $prod;
         }
 
-        return $app->render('products/products.detail.twig', $result);
+        return $app->render('products/product.detail.twig', $result);
     }
 
     /**
@@ -84,8 +84,8 @@ class ProductController {
         
         for ($i = 0; $i < count($response); $i++) {
             $prod['ean'] = $response[$i]['barcode'];
-            $prod['name']= $response[$i]['itemName'];
-            $prod['prices'] = array();
+            $prod['name'] = $response[$i]['itemName'];
+            $prod['prices'] = [];
             
             for ($j = 0; $j < count($response[$i]['prices']); $j++) {
                 if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {                    
