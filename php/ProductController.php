@@ -25,18 +25,16 @@ class ProductController {
         
         $curl = curl_init();
         
-        $url = "http://192.168.0.241/eanlist?type=Web";
-        
         $requestData = array();
         $requestData['id'] = $id;
-        curl_setopt($curl, CURLOPT_URL,  $url);
+        curl_setopt($curl, CURLOPT_URL,  'http://192.168.0.241/eanlist?type=Web');
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestData);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $response = json_decode(curl_exec($curl));
         curl_close($curl);
         $result = [];
-        
+                
         for ($i = 0; $i < count($response); $i++) {
             $prod = array();
             $prod['ean'] = $response[$i]['barcode'];
@@ -70,11 +68,9 @@ class ProductController {
     public function getByName_GET(Application $app, $name){
         $curl = curl_init();
         
-        $url = "http://192.168.0.241/eanlist?type=Web";
-        
         $requestData = array();
         $requestData['names'] = $name;
-        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_URL, 'http://192.168.0.241/eanlist?type=Web');
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestData);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -104,3 +100,4 @@ class ProductController {
     }
 
 }
+?>
