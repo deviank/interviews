@@ -23,8 +23,7 @@ class ProductController {
         
     public function getById_GET(Application $app, $id){
         
-        $curl = curl_init();
-        
+        $curl = curl_init();        
         $requestData = [];
         $requestData['id'] = $id;
         curl_setopt($curl, CURLOPT_URL,  'http://192.168.0.241/eanlist?type=Web');
@@ -33,8 +32,8 @@ class ProductController {
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $response = json_decode(curl_exec($curl));
         curl_close($curl);
-        $result = [];
         
+        $result = [];        
         $prod = [];
         $p_price = [];
         
@@ -47,7 +46,7 @@ class ProductController {
                     if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {                        
                         $p_price['price'] = $response[$i]['prices'][$j]['sellingPrice'];
                         $p_price['currency'] = $response[$i]['prices'][$j]['currencyCode'];
-                        $prod['prices'][] = $p_price;
+                        $prod['prices'] = $p_price;
                 }
             }
             
@@ -67,8 +66,8 @@ class ProductController {
      */
     
     public function getByName_GET(Application $app, $name){
-        $curl = curl_init();
         
+        $curl = curl_init();        
         $requestData = [];
         $requestData['names'] = $name;
         curl_setopt($curl, CURLOPT_URL, 'http://192.168.0.241/eanlist?type=Web');
@@ -76,9 +75,9 @@ class ProductController {
         curl_setopt($curl, CURLOPT_POSTFIELDS, $requestData);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $response = json_decode(curl_exec($curl));
-        curl_close($curl);       
-        $result = [];
+        curl_close($curl);
         
+        $result = [];        
         $prod = [];
         $p_price = [];
         
@@ -91,7 +90,7 @@ class ProductController {
                 if ($response[$i]['prices'][$j]['currencyCode'] != 'ZAR') {                    
                     $p_price['price'] = $response[$i]['prices'][$j]['sellingPrice'];
                     $p_price['currency'] = $response[$i]['prices'][$j]['currencyCode'];
-                    $prod['prices'][] = $p_price;
+                    $prod['prices'] = $p_price;
                 }
             }
             
